@@ -3,7 +3,7 @@ const app = express();
 const port = 8000;
 
 app.get('/country', (req, res) => {
-    var array = ["senegal","france","usa","italy","belgique"]
+    var array = ["senegal","france","usa","italy","belgique",]
     res.send(array);
   });
 

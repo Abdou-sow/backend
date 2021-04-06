@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Abdou-sow/backend#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "expresse": "^1.0.2"
   }
