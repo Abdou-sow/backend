@@ -5,8 +5,8 @@ const app = express();
 app.use(cors())
 
 
-const {countries} = require("./datacountries.js");
-const app = express();
+const {countries, France,Brazil,Croatia} = require("./datacountries.js");
+
 
 const port = 8000;
 
@@ -16,6 +16,17 @@ app.get('/countries', (req, res) => {
   res.json(countries);
 });
 
+app.get('/countries/france', (req, res) => {
+    res.json(France);
+  });
+
+  app.get('/countries/brazil', (req, res) => {
+    res.json(Brazil);
+  });
+
+  app.get('/countries/croatia', (req, res) => {
+    res.json(Croatia);
+  });
 
 // Run server
 app.listen(port, () => {
