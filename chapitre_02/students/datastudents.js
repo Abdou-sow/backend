@@ -1,0 +1,22 @@
+const students = [
+    "Lionel",
+    "Amir",
+    "Faruk",
+    "abdou",
+    "Moncef",
+    "Francisco",
+    "mugilan",
+    "karim",
+    "Fethy",
+    "asma",
+    "Suleman",
+    "Axel",
+    "Mehdi",
+    "Bakagnan",
+    "Rocio",
+    "Ikram",
+    "Lucas",
+    "Fasulu",
+    "sabrina"
+]
+module.exports={students}
