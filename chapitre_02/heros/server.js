@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require("cors");
-// const { json } = require('express');
 
 
 const port = 8000;
@@ -10,24 +9,34 @@ const app = express();
 app.use(cors())
 app.use(express.json())
 
+
+
 // middleware
 app.use(function (req, res, next) {
     console.log("a travers des requêtes");
     next();
 })
 
-function transformName(req, res, next) {
-    if(req.body.name != undefined ){
-
-        req.body.name=req.body.name.toLowerCase()
+function nameONliste(req, res, next) {
+    for(var i =0; i<superHeros.length ;i++){
+        if()
     }
-    else{
+}
+
+function transformName(req, res, next) {
+    if (req.body.name != undefined) {
+
+        req.body.name = req.body.name.toLowerCase()
+    }
+    else {
         res.json({
-            message : "vous aver pas ajouter de supre hero !"
+            message: "vous aver pas ajouter de supre hero !"
         })
     }
     next();
 }
+
+
 //liste des super heros 
 const superHeros = [
     {
@@ -56,6 +65,8 @@ const superHeros = [
     }
 ]
 
+
+
 //routes
 app.get('/', (req, res) => {
     res.json({ message: "server ok" });
@@ -69,9 +80,6 @@ app.get('/heroes/:name', (req, res) => {
 
     let namehero = req.params.name;
 
-    // console.log("namehero :",namehero);
-    // console.log("objet envoyer:",superHeros[1].name);
-    // console.log(namehero ===superHeros[1].name );               //verrificarion 
     for (var i = 0; i < superHeros.length; i++) {
         if (superHeros[i].name === namehero) {
 
@@ -95,11 +103,7 @@ app.get('/heroes/:name/powers', (req, res) => {
 
 })
 
-app.post('/heroes',transformName, (req, res) => {
-
-    // let newHeroe = req.body;
-    // console.log("req.body :" ,req.body);
-    // console.log("req.body.typeof :" , req.body.name.toLowerCase());
+app.post('/heroes', transformName, (req, res) => {
 
     superHeros.push(req.body)
     res.json({
@@ -107,7 +111,7 @@ app.post('/heroes',transformName, (req, res) => {
     })
 })
 
-app.post('/heroes/:name/powers',(req,res) =>{
+app.post('/heroes/:name/powers', (req, res) => {
     let namehero = req.params.name;
 
     for (var i = 0; i < superHeros.length; i++) {
@@ -122,6 +126,8 @@ app.post('/heroes/:name/powers',(req,res) =>{
     })
 
 })
+
+
 
 //run server 
 app.listen(port, () => {
