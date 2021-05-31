@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require("cors");
-const { json } = require('express');
+// const { json } = require('express');
 
 
 const port = 8000;
@@ -16,6 +16,18 @@ app.use(function (req, res, next) {
     next();
 })
 
+function transformName(req, res, next) {
+    if(req.body.name != undefined ){
+
+        req.body.name=req.body.name.toLowerCase()
+    }
+    else{
+        res.json({
+            message : "vous aver pas ajouter de supre hero !"
+        })
+    }
+    next();
+}
 //liste des super heros 
 const superHeros = [
     {
@@ -62,6 +74,7 @@ app.get('/heroes/:name', (req, res) => {
     // console.log(namehero ===superHeros[1].name );               //verrificarion 
     for (var i = 0; i < superHeros.length; i++) {
         if (superHeros[i].name === namehero) {
+
             res.json(superHeros[i])
 
         }
@@ -74,6 +87,7 @@ app.get('/heroes/:name/powers', (req, res) => {
 
     for (var i = 0; i < superHeros.length; i++) {
         if (superHeros[i].name === namehero) {
+
             res.json(superHeros[i].power)
 
         }
@@ -81,16 +95,33 @@ app.get('/heroes/:name/powers', (req, res) => {
 
 })
 
-app.post('/heroes', (req ,res) =>{
-    const newHeroe = req.body;
+app.post('/heroes',transformName, (req, res) => {
 
-    superHeros.push({"name":newHeroe})
+    // let newHeroe = req.body;
+    // console.log("req.body :" ,req.body);
+    // console.log("req.body.typeof :" , req.body.name.toLowerCase());
 
+    superHeros.push(req.body)
     res.json({
-        message : "Ok, héros ajouté"
+        message: "Ok, héros ajouté"
     })
 })
 
+app.post('/heroes/:name/powers',(req,res) =>{
+    let namehero = req.params.name;
+
+    for (var i = 0; i < superHeros.length; i++) {
+        if (superHeros[i].name === namehero) {
+
+            superHeros[i].power.push(req.body.power)
+
+        }
+    }
+    res.json({
+        message: "pouvoir ajouté !"
+    })
+
+})
 
 //run server 
 app.listen(port, () => {
