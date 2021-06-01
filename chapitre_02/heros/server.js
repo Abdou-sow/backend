@@ -17,19 +17,52 @@ app.use(function (req, res, next) {
     next();
 })
 
-function nameONliste(req, res, next) {
-    for(var i =0; i<superHeros.length ;i++){
-        if()
+function nameONlisteToAdd(req, res, next) {
+    for (var i = 0; i < superHeros.length; i++) {
+
+        if (req.body.name.toLowerCase() === superHeros[i].name.toLowerCase()) {
+
+            console.log("superHeros[i].name :", superHeros[i].name.toLowerCase());
+            return res.json("ce super hero existe deja !")
+
+        } else {
+            console.log("superHeros[i].name :", superHeros[i].name);
+        }
     }
+    next()
+}
+
+function nameONlisteToDelet(req, res, next) {
+    console.log("superHeros.length : ", superHeros.length)
+    for (var i = 0; i < superHeros.length; i++) {
+
+        console.log("req.body.name.toLowerCase() :", req.body.name.toLowerCase());""
+        console.log("superHeros[i].name.toLowerCase() :", superHeros[i].name.toLowerCase());
+
+        if ( superHeros[i].name.toLowerCase() === req.body.name.toLowerCase() ) {
+
+            var superHerToDelet = superHeros[i].name.toLowerCase();
+            superHeros = superHeros.filter(x => x !== superHerToDelet)
+
+            return res.json("super hero supprimer")
+
+        } else {
+
+             res.json("ce super hero n'existe pas!")
+
+        }
+    }
+    next()
 }
 
 function transformName(req, res, next) {
+
     if (req.body.name != undefined) {
 
         req.body.name = req.body.name.toLowerCase()
     }
     else {
-        res.json({
+        return res.json({
             message: "vous aver pas ajouter de supre hero !"
         })
     }
@@ -81,12 +114,14 @@ app.get('/heroes/:name', (req, res) => {
     let namehero = req.params.name;
 
     for (var i = 0; i < superHeros.length; i++) {
-        if (superHeros[i].name === namehero) {
+        if (superHeros[i].name.toLowerCase() === namehero.toLowerCase()) {
 
             res.json(superHeros[i])
 
         }
     }
+
+    res.json("le super hero n'est pas trouver")
 })
 
 app.get('/heroes/:name/powers', (req, res) => {
@@ -100,10 +135,10 @@ app.get('/heroes/:name/powers', (req, res) => {
 
         }
     }
-
+    32
 })
 
-app.post('/heroes', transformName, (req, res) => {
+app.post('/heroes', nameONlisteToAdd, transformName, (req, res) => {
 
     superHeros.push(req.body)
     res.json({
@@ -115,7 +150,7 @@ app.post('/heroes/:name/powers', (req, res) => {
     let namehero = req.params.name;
 
     for (var i = 0; i < superHeros.length; i++) {
-        if (superHeros[i].name === namehero) {
+        if (superHeros[i].name.toLowerCase() === namehero.toLowerCase()) {
 
             superHeros[i].power.push(req.body.power)
 
@@ -125,6 +160,13 @@ app.post('/heroes/:name/powers', (req, res) => {
         message: "pouvoir ajouté !"
     })
 
+})
+
+
+app.delete('/heroes/:name', nameONlisteToDelet, (req, res) => {
+    let nameheroToDelet = req.params.name
+
+    res.json(newsuperHeros)
 })
 
 
