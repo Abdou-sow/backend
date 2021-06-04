@@ -34,6 +34,7 @@ function nameONlisteToAdd(req, res, next) {
 
 function nameONlisteToDelet(req, res, next) {
     console.log("superHeros.length : ", superHeros.length)
+
     for (var i = 0; i < superHeros.length; i++) {
 
         console.log("req.body.name.toLowerCase() :", req.body.name.toLowerCase());""
@@ -44,15 +45,15 @@ function nameONlisteToDelet(req, res, next) {
             var superHerToDelet = superHeros[i].name.toLowerCase();
             superHeros = superHeros.filter(x => x !== superHerToDelet)
 
-            return res.json("super hero supprimer")
 
         } else {
 
-             res.json("ce super hero n'existe pas!")
 
+     
         }
     }
-    next()
+
+    res.json("je suis enttrain de tester")
 }
 
 function transformName(req, res, next) {
