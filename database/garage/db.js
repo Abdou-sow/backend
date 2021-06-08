@@ -46,13 +46,13 @@ app.post("/car", async (req, res) => {
 
     try {
         const newCars = req.body
-        const car = new car({
+        const cars =({
             brand: newCars.brand,
             model: newCars.model,
             year: newCars.year
         })
-
-        const carsaved = await car.save()
+        // console.log("newCars :", newCars);
+        const carsaved = await cars.save()
 
         res.json(
             {
@@ -64,7 +64,7 @@ app.post("/car", async (req, res) => {
         console.error("Error in POST /car", error)
 
         res.json({
-            message: "The car was not saved :("
+            message: "The car was not saved "
         })
     }
 
