@@ -29,7 +29,7 @@ const app = express();
 app.use(express.json());
 
 
-app.post("/validator",
+app.post("/users/add",
     expressValidator.body("username").isLength(4),
     expressValidator.body("age").isLength(2),
     expressValidator.body("ville").optional().isIn(["Paris", "Tokyo", "Los Angeles"]),
@@ -39,53 +39,66 @@ app.post("/validator",
 
         if (!errors.isEmpty()) {
 
-        return res.status(400).json(
-            {
-                "errors": [
-                    {
-                        "location": "body",
-                        "msg": "Invalid value",
-                        "param": "username"
-                    }
-                ]
+            return res.status(400).json(
+                {
+                    "errors": [
+                        {
+                            "location": "body",
+                            "msg": "Invalid value",
+                            "param": "username"
+                        }
+                    ]
+                }
+            );
+        } else {
+            try {
+                const newUser = req.body
+
+                const user = new User({
+                    userName: newUser.username,
+                    age: newUser.age,
+                    ville: newUser.ville,
+
+                })
+
+                const usersaved = await user.save()
+
+                res.json({
+                    message: "The user was saved correctly",
+                    newUser
+                })
+
+
+            } catch (error) {
+                console.error("Error in POST /Validator", error)
+
+                res.json({
+                    message: "The user was not saved :("
+                })
             }
-        );
-    } else {
-        try {
-            const newUser = req.body
 
-            const user = new User({
-                userName: newUser.username,
-                age: newUser.age,
-                ville: newUser.ville,
-
-            })
-
-            const usersaved = await user.save()
-
-            res.json({
-                message: "The user was saved correctly",
-                newUser
-            })
-
-
-        } catch (error) {
-            console.error("Error in POST /Validator", error)
-
-            res.json({
-                message: "The user was not saved :("
-            })
         }
-
-    }
-})
+    })
 
 // la route GET / qui enverra tous les utilisateurs
 
-app.get("/", (req, res) => {
-    res.json({
-        message: "get ok"
-    })
+app.get("/", async (req, res) => {
+
+    try {
+
+        const user = await User.find().exec()
+        const nameUser =user.map(x=>x.userName)
+
+        // console.log("nameUser :" ,nameUser);
+
+        res.json(nameUser)
+
+    } catch (error) {
+
+        res.json({
+            message: "Error when finding user :("
+        })
+    }
 })
 
 
