@@ -87,7 +87,7 @@ app.get("/", async (req, res) => {
     try {
 
         const user = await User.find().exec()
-        const nameUser =user.map(x=>x.userName)
+        const nameUser = user.map(x => x.userName)
 
         // console.log("nameUser :" ,nameUser);
 
@@ -113,16 +113,40 @@ app.post("/users/add", (req, res) => {
 
 // la route GET /users/:username qui enverra les infos d'un user selon son username
 
-app.get("/users/username", (req, res) => {
-    res.json({
-        message: "users/username ok"
-    })
+app.get("/users/:userName", async (req, res) => {
+
+    try {
+        const nameUser = req.params.userName
+
+        if (nameUser) {
+            const user = await User.find().exec()
+            console.log(" :", user);
+            for (var i = 0; i < user.length; i++) {
+
+                if (user[i].userName.toLowerCase() ===nameUser ) {
+
+                    res.json(user[i])
+                }
+            }
+        } else {
+            res.json({
+                message: "user not found"
+            })
+        }
+    } catch (err) {
+        console.error(err)
+
+        res.status(500).json({ errorMessage: "There was a problem :(" })
+    }
+
 })
+
 
 
 // la route GET /users/:email qui enverra les infos d'un user selon son email
 
 app.get("/users/email", (req, res) => {
+
     res.json({
         message: "users/username ok"
     })
