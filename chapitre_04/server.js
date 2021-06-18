@@ -47,6 +47,10 @@ app.get("/users/email", (req, res) => {
     })
 })
 
+// bonus 
+
+app.get("/users/:id" , userRoutes)
+
 //pour toutes les routes inhesitante
 app.get("*", (req, res) => {
     res.json({
