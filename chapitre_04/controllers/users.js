@@ -21,13 +21,13 @@ router.get('/', async (req, res) => {
 })
 
 
-router.get("/users/:userName", async (req, res) => {
+router.get("/users/userName/:userName", async (req, res) => {
 
     try {
         const nameUser = req.params.userName
-
-        if (nameUser) {
-            const user = await UserModel.find().exec()
+        const user = await UserModel.find().exec()
+    
+        if (user.map(x =>x.userName).includes(nameUser)) {
 
             for (var i = 0; i < user.length; i++) {
 
@@ -51,13 +51,19 @@ router.get("/users/:userName", async (req, res) => {
 
 router.get("/users/id/:id", async (req, res) => {
     const idUser = req.params.id
+    const user = await UserModel.find().exec()
 
     try {
-        const idUser = req.params.id
-        console.log("idUser :", idUser)
-
+        if(user.map(x =>x.id).includes(idUser)){
+    
         const userId = await UserModel.findById(idUser).exec()
+
         res.json(userId)
+    }else{
+        res.json({
+            message: "id not found"
+        })
+    }
 
     } catch (err) {
 
@@ -70,6 +76,7 @@ router.get("/users/id/:id", async (req, res) => {
 router.post("/users/add",
     expressValidator.body("username").isLength(4),
     expressValidator.body("age").isLength(2),
+    expressValidator.body("email").isEmail(),
     expressValidator.body("ville").optional().isIn(["Paris", "Tokyo", "Los Angeles"]),
 
     async (req, res) => {

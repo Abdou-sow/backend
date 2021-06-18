@@ -34,7 +34,7 @@ app.use("/users/add",userRoutes)
     
 // la route GET /users/:username qui enverra les infos d'un user selon son username
 
-app.use("/users/:userName", userRoutes )
+app.use("/users/userName/:userName", userRoutes )
 
 
 // bonus 
