@@ -37,6 +37,10 @@ app.use("/users/add",userRoutes)
 app.use("/users/:userName", userRoutes )
 
 
+// bonus 
+
+app.use("/users/id/:id" , userRoutes)
+
 
 // la route GET /users/:email qui enverra les infos d'un user selon son email
 
@@ -47,9 +51,6 @@ app.get("/users/email", (req, res) => {
     })
 })
 
-// bonus 
-
-app.get("/users/:id" , userRoutes)
 
 //pour toutes les routes inhesitante
 app.get("*", (req, res) => {
