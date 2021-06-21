@@ -113,16 +113,10 @@ router.post("/users/add",
         const errors = await expressValidator.validationResult(req);
 
         if (!errors.isEmpty()) {
-
+            console.log("errors :", errors);
             return res.status(400).json(
                 {
-                    "errors": [
-                        {
-                            "location": "body",
-                            "msg": "Invalid value",
-                            "param": "username"
-                        }
-                    ]
+                    "errors": errors
                 }
             );
         } else {
@@ -130,7 +124,7 @@ router.post("/users/add",
                 const newUser = req.body
                 const user = new UserModel({
                     userName: newUser.username,
-                    email:newUser.email,
+                    email: newUser.email,
                     age: newUser.age,
                     ville: newUser.ville,
 
@@ -140,7 +134,7 @@ router.post("/users/add",
 
                 res.json({
                     message: "The user was saved correctly",
-                    usersaved 
+                    usersaved
                 })
 
 

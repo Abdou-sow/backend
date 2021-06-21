@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/Abdou-sow/backend#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "bootstrap": "^5.0.1",
     "cors": "^2.8.5",
