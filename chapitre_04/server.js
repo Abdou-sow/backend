@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require("mongoose")
 const userRoutes = require('./controllers/users')
+const Cors = require('cors')
 
 
 mongoose.connect("mongodb://localhost:27017/validator", { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
@@ -15,12 +16,12 @@ mongoose.connect("mongodb://localhost:27017/validator", { useNewUrlParser: true,
 
 
 
-const port = 8000;
+const port = 9000;
 const app = express();
 
 
 app.use(express.json());
-
+app.use(Cors())
 
 
 // la route GET / qui enverra tous les utilisateurs

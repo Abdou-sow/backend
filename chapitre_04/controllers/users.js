@@ -73,6 +73,7 @@ router.get("/users/id/:id", async (req, res) => {
     }
 })
 
+
 router.get("/users/email/:email", async (req, res) => {
 
     try {
@@ -153,9 +154,6 @@ router.post("/users/add",
 
         }
     })
-
-
-
 
 
 module.exports = router;
