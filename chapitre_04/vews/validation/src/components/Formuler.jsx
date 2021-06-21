@@ -29,22 +29,22 @@ function Formuler() {
             <h3>Add user</h3>
             <form onSubmit={validUser}>
                 <div className="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">username</label>
-                    <input type="text" class="form-control" onChange={(e) => setUsername(e.target.value)}></input>
+                    <label for="exampleFormControlInput1" className="form-label">username</label>
+                    <input type="text" className="form-control" onChange={(e) => setUsername(e.target.value)}></input>
                 </div>
                 <div className="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Age</label>
-                    <input type="number" class="form-control" onChange={(e) => setAge(e.target.value)}></input>
+                    <label for="exampleFormControlInput1" className="form-label">Age</label>
+                    <input type="number" className="form-control" onChange={(e) => setAge(e.target.value)}></input>
                 </div>
                 <div className="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" onChange={(e) => setEmail(e.target.value)}></input>
+                    <label for="exampleInputEmail1" className="form-label">Email address</label>
+                    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" onChange={(e) => setEmail(e.target.value)}></input>
                 </div>
                 <div className="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">La ville de l'utilisateur</label>
-                    <input type="text" class="form-control" onChange={(e) => setVille(e.target.value)}></input>
+                    <label for="exampleFormControlInput1" className="form-label">La ville de l'utilisateur</label>
+                    <input type="text" className="form-control" onChange={(e) => setVille(e.target.value)}></input>
                 </div>
-                <button type="submit" class="btn btn-primary">valider</button>
+                <button type="submit" className="btn btn-primary">valider</button>
             </form>
         </div>
     )
