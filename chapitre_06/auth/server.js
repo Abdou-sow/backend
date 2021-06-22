@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require("mongoose");
-const Model =require("./models/Loginmodel")
+const Model = require("./models/Loginmodel")
+const  bcrypt = require('bcryptjs');
 
 mongoose.connect("mongodb://localhost:27017/loging", { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
     if (err) {
@@ -21,18 +22,22 @@ const app = express();
 app.use(express.json());
 
 
-app.post("/login",async(req ,res)=>{
+app.post("/login", async (req, res) => {
     try {
-        const newUser =req.body
-        const User = new Model({
+        const newUser = req.body
+        const hash= await bcrypt.hash(newUser.passWord)
+        console.log("hash(newUser.passWord) :",hash);
+        const User = await new Model({
             userName: newUser.userName,
-            passWord:newUser.passWord
+            passWord: bcrypt.hash
         })
-            const userSaved =await User.save()
-            res.json("vous etez bien enrigistrer ",
-            userSaved);
+        const userSaved = await User.save()
+        res.json({
+            message: "vous etez bien enrigistrer ",
+            userSaved
+        });
     } catch (error) {
-        res.json("error :",error)
+        res.json("error :", error)
     }
 })
 
