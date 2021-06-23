@@ -1,17 +1,15 @@
 const express = require('express');
 const Model = require('../moldels/SignupModel');
 const expressValidator = require("express-validator");
-const { check } = require('express-validator')
+const bcryptjs = require("bcryptjs")
 const router = express.Router();
 
 
 router.post("/signup",
     expressValidator.body("email").isEmail(),
-    expressValidator.body("passWord").isLength({ min: 4 }),
+    expressValidator.body("passWord").isLength({ min: 8 }),
     expressValidator.body('confirmPassword').custom(async (confirmPassword, { req }) => {
         const passWord = req.body.passWord
-        console.log("passWord :" ,passWord);
-        console.log("confirmPassword :" ,confirmPassword);
         if (passWord !== confirmPassword) {
             throw new Error('PassWords must be same')
         }
@@ -28,17 +26,18 @@ router.post("/signup",
         } else {
             try {
                 const newUser = req.body
+                const passWord = bcryptjs.hashSync(req.body.passWord)
                 const user = new Model({
                     email: newUser.email,
-                    passWord: newUser.passWord,
+                    passWord: passWord,
                     confirmPassWord: newUser.confirmPassWord,
                     firstName: newUser.firstName,
                     surname: newUser.surname,
-                    birth: newUser.birth
+                    birth: Date.parse(newUser.birth)
                 })
                 const userSaved = await user.save()
                 res.json({
-                    message:"the user was added",
+                    message: "the user was added",
                     userSaved
                 })
             } catch (error) {
