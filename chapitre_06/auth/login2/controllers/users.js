@@ -1,18 +1,21 @@
 const express = require('express');
-// const bcrypt = require('bcryptjs');
 const Model = require('../moldels/SignupModel');
 const expressValidator = require("express-validator");
+const { check } = require('express-validator')
 const router = express.Router();
 
 
 router.post("/signup",
-    expressValidator.body("passWord").isLength(8)
-        .custom(async (confirmPassword, { req }) => {
-            const password = req.body.password
-            if (password !== confirmPassword) {
-                throw new Error('Passwords must be same')
-            }
-        }),
+    expressValidator.body("email").isEmail(),
+    expressValidator.body("passWord").isLength({ min: 4 }),
+    expressValidator.body('confirmPassword').custom(async (confirmPassword, { req }) => {
+        const passWord = req.body.passWord
+        console.log("passWord :" ,passWord);
+        console.log("confirmPassword :" ,confirmPassword);
+        if (passWord !== confirmPassword) {
+            throw new Error('PassWords must be same')
+        }
+    }),
     async (req, res) => {
         const errors = await expressValidator.validationResult(req);
         if (!errors.isEmpty()) {
@@ -33,7 +36,11 @@ router.post("/signup",
                     surname: newUser.surname,
                     birth: newUser.birth
                 })
-
+                const userSaved = await user.save()
+                res.json({
+                    message:"the user was added",
+                    userSaved
+                })
             } catch (error) {
                 res.json(error)
             }

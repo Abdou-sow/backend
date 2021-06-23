@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require("mongoose");
-const Cors = require('cors')
 const useRouters = require('./controllers/users')
+const Cors = require('cors')
+
 
 
 mongoose.connect("mongodb://localhost:27017/loging2", { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
@@ -23,7 +24,7 @@ const app = express();
 app.use(express.json());
 app.use(Cors());
 
-
+app.use("/", useRouters)
 app.use("/signup", useRouters)
 
 

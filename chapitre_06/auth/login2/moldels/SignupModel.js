@@ -4,7 +4,7 @@ const Mongoose = require("mongoose");
 const SignupSchema = Mongoose.Schema({
     email: String,
     passWord: String,
-    confirmPassWord: String,
+    confirmPassword: String,
     firstName: String,
     surname: String,
     birth: { type: Date },
