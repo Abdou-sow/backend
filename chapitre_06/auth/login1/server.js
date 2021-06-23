@@ -25,7 +25,7 @@ app.use(express.json());
 app.post("/login", async (req, res) => {
     try {
         const newUser = req.body
-        const hash= await bcrypt.hash(newUser.passWord)
+        const hash= await bcrypt.hash(newUser.passWord,10)
         console.log("hash(newUser.passWord) :",hash);
         const User = await new Model({
             userName: newUser.userName,
