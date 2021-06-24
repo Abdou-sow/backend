@@ -3,32 +3,31 @@ import { useState } from "react";
 
 function Signup() {
     const [email, setEmail] = useState("")
-    const [Password, setPassword] = useState("")
+    const [PassWord, setPassWord] = useState("")
     const [confirPassword, setConfirPassword] = useState("")
     const [firstName, setFirstName] = useState("")
     const [surName, setSurName] = useState("")
     const [birth, setBirth] = useState("")
 
 
-
-    const [age, setAge] = useState("")
-
-
     const validUser = (e) => {
         e.preventDefault();
 
-        const url = "http://localhost:9000/users/add"
+        const url = "http://localhost:8002/signup"
 
         axios.post(url, {
-            "username": username,
             "email": email,
-            "age": age,
-            "ville": ville
+            "PassWord": PassWord,
+            "confirPassword": confirPassword,
+            "firstName": firstName,
+            "surName": surName,
+            "birth": birth
         }).then(res => {
             console.log("res :", res);
             console.log("res.data :", res.data);
         })
     }
+    console.log("birth :",birth);
 
     return (
         <div>
@@ -39,8 +38,8 @@ function Signup() {
                     <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" onChange={(e) => setEmail(e.target.value)}></input>
                 </div>
                 <div className="mb-3">
-                    <label for="exampleFormControlInput1" className="form-label">Password /label>
-                    <input type="Password" className="form-control" onChange={(e) => setPassword(e.target.value)}></input>
+                    <label for="exampleFormControlInput1" className="form-label">Password </label>
+                    <input type="Password" className="form-control" onChange={(e) => setPassWord(e.target.value)}></input>
                 </div>
                 <div className="mb-3">
                     <label for="exampleFormControlInput1" className="form-label">confirPassword</label>

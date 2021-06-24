@@ -11,13 +11,15 @@ router.post("/signup",
     expressValidator.body('confirmPassword').custom(async (confirmPassword, { req }) => {
         const passWord = req.body.passWord
         if (passWord !== confirmPassword) {
+
             throw new Error('PassWords must be same')
         }
     }),
+
     async (req, res) => {
         const errors = await expressValidator.validationResult(req);
         if (!errors.isEmpty()) {
-            console.log("errors :", errors);
+            console.log("errors dans /signup :", errors);
             return res.status(400).json(
                 {
                     "errors": errors
